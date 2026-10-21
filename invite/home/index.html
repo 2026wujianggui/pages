@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#8B1A1A">
+<title>电子请柬</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:#FAF6F2;color:#4A3B32;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",serif;
+  line-height:1.6;max-width:520px;margin:0 auto;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+
+/* 顶部 */
+.hero{position:relative;padding:52px 24px 44px;text-align:center;color:#fff;overflow:hidden;
+  background:linear-gradient(165deg,#C2443C 0%,#9E2A2A 52%,#6E1717 100%)}
+.hero::before{content:"";position:absolute;top:-40px;left:50%;transform:translateX(-50%);
+  width:340px;height:340px;border-radius:50%;border:1px solid rgba(255,215,150,.22)}
+.hero::after{content:"";position:absolute;top:-10px;left:50%;transform:translateX(-50%);
+  width:250px;height:250px;border-radius:50%;border:1px solid rgba(255,215,150,.16)}
+.hero>*{position:relative;z-index:2}
+.orn{font-size:15px;color:#E8C87A;letter-spacing:8px;margin-bottom:16px}
+.hero h1{font-size:31px;font-weight:800;letter-spacing:7px;text-shadow:0 2px 12px rgba(0,0,0,.28)}
+.sub{font-size:13.5px;color:rgba(255,255,255,.88);margin-top:11px;letter-spacing:2px}
+.names{margin-top:24px;font-size:22px;font-weight:700;color:#FFE9BE;letter-spacing:2px}
+.names .and{font-size:16px;margin:0 10px;color:#E8C87A}
+.datebig{margin-top:22px;font-size:15px;letter-spacing:3px;color:#fff}
+
+/* 装饰分割 */
+.divider{text-align:center;padding:20px 0 4px;color:#C9A961;font-size:13px;letter-spacing:6px}
+
+/* 倒计时 */
+.count{margin:4px 18px 0;padding:20px 16px;border-radius:16px;background:#fff;
+  box-shadow:0 4px 20px rgba(140,60,50,.10);text-align:center;position:relative;top:-26px}
+.count .t{font-size:12.5px;color:#A08B79;letter-spacing:3px;margin-bottom:13px}
+.boxes{display:flex;justify-content:center;gap:9px}
+.box{min-width:60px;padding:11px 6px;border-radius:11px;
+  background:linear-gradient(160deg,#FBF3EA,#F3E4D6);border:1px solid #E8D5C2}
+.box b{display:block;font-size:24px;font-weight:800;color:#9E2A2A;line-height:1.15}
+.box span{font-size:10.5px;color:#A08B79}
+
+/* 信息 */
+.info{margin:8px 18px 0;padding:20px 18px;border-radius:16px;background:#fff;
+  box-shadow:0 3px 16px rgba(140,60,50,.08)}
+.info h2{font-size:13px;color:#A08B79;letter-spacing:4px;text-align:center;margin-bottom:16px;font-weight:600}
+.row{display:flex;gap:12px;padding:11px 0;border-bottom:1px dashed #EFE3D8;align-items:flex-start}
+.row:last-child{border:0}
+.row .k{width:52px;flex-shrink:0;font-size:13px;color:#B5A08D;display:flex;align-items:center;gap:5px}
+.row .k i{font-style:normal;font-size:13px}
+.row .v{flex:1;font-size:14.5px;color:#4A3B32;font-weight:600}
+.row .v small{display:block;font-size:11.5px;color:#A08B79;font-weight:400;margin-top:3px}
+
+/* 相册 */
+.album{margin:16px 18px 0;padding:18px;border-radius:16px;background:#fff;
+  box-shadow:0 3px 16px rgba(140,60,50,.08)}
+.album h2{font-size:13px;color:#A08B79;letter-spacing:4px;text-align:center;margin-bottom:14px;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.ph{aspect-ratio:1;border-radius:9px;background:linear-gradient(135deg,#F7EAE0,#EEDCCB);
+  display:flex;align-items:center;justify-content:center;font-size:26px;position:relative;overflow:hidden}
+.ph:nth-child(2){background:linear-gradient(135deg,#F0E2EC,#E2D0DE)}
+.ph:nth-child(3){background:linear-gradient(135deg,#E6EDE4,#D5E0D2)}
+.ph:nth-child(4){background:linear-gradient(135deg,#EFE8DA,#DFD5C4)}
+.ph:nth-child(5){background:linear-gradient(135deg,#F2E4E0,#E3D2CE)}
+.ph:nth-child(6){background:linear-gradient(135deg,#E8E9EF,#D8DAE2)}
+
+/* 寄语 */
+.words{margin:16px 18px 0;padding:24px 20px;border-radius:16px;text-align:center;
+  background:linear-gradient(160deg,#FFFBF5,#F9F0E6);border:1px solid #F0E2D2}
+.words .q{font-size:12px;color:#C9A961;letter-spacing:5px}
+.words p{font-size:14.5px;color:#6B5749;margin-top:14px;line-height:2;font-style:italic}
+
+/* 回执 */
+.rsvp{margin:16px 18px 0;padding:20px 18px;border-radius:16px;background:#fff;
+  box-shadow:0 3px 16px rgba(140,60,50,.08);text-align:center}
+.rsvp h2{font-size:13px;color:#A08B79;letter-spacing:4px;margin-bottom:15px;font-weight:600}
+.btns{display:flex;gap:10px}
+.b{flex:1;padding:12px 0;border-radius:11px;font-size:14px;font-weight:700;text-decoration:none;
+  border:0;display:block;transition:.15s}
+.b:active{transform:scale(.97)}
+.b.p{background:linear-gradient(135deg,#C2443C,#9E2A2A);color:#fff;box-shadow:0 4px 13px rgba(158,42,42,.30)}
+.b.s{background:#fff;color:#9E2A2A;border:1.6px solid #C2443C}
+.tel{margin-top:13px;font-size:12px;color:#A08B79}
+
+/* 底部 */
+.foot{text-align:center;padding:26px 0 30px;color:#C0A98F;font-size:11.5px;letter-spacing:2px}
+.foot .heart{color:#C2443C;font-size:14px}
+
+/* 花瓣动画 */
+.petal{position:fixed;top:-24px;font-size:15px;opacity:0;pointer-events:none;z-index:99;
+  animation:fall linear forwards}
+@keyframes fall{
+  0%{transform:translateY(0) rotate(0deg);opacity:0}
+  10%{opacity:.85}
+  100%{transform:translateY(105vh) rotate(560deg);opacity:0}
+}
+</style>
+</head>
+<body>
+
+<script>
+/* ═══════════════════════════════════════════
+   ★ 改这里就能变成任何一场宴席 ★
+   ═══════════════════════════════════════════ */
+var CONFIG = {
+  type:"乔迁", title:"乔迁之喜", subtitle:"HOUSEWARMING",
+  groom:"张", bride:"一家三口",
+  dateText:"2026年11月22日  农历十月初三  星期日",
+  target:"2026-11-22T17:30:00",
+  items:[
+    {k:"时间",i:"🕐",v:"2026年11月22日 17:30",s:"（17:00 开始入席）"},
+    {k:"地点",i:"📍",v:"嘉和苑 5 栋 1802",s:"XX市XX区XX大道 66 号"},
+    {k:"新居",i:"🏡",v:"三室两厅 128㎡",s:"带车位，电梯直达"},
+    {k:"联系",i:"📞",v:"138-0000-0000",s:"明轩 · 欢迎来电",tel:"13800000000"}
+  ],
+  words:"新居落成，暖灯初上。<br>一砖一瓦，皆是心意。<br>请君登门，共话桑麻。",
+  photos:["🏡","🪑","🧱","🌿","🥂","🎉"],
+  rsvp:true, petal:"🌿"
+};
+</script>
+
+<div id="app"></div>
+
+<script>
+(function(){
+  var C=CONFIG;
+  document.title = C.title+" · "+C.type+"请柬";
+
+  // 飘落动画
+  if(C.petal){
+    setInterval(function(){
+      var e=document.createElement('div');
+      e.className='petal'; e.textContent=C.petal;
+      e.style.left=(Math.random()*100)+'vw';
+      e.style.animationDuration=(6+Math.random()*5)+'s';
+      document.body.appendChild(e);
+      setTimeout(function(){e.remove()},12000);
+    },1300);
+  }
+
+  var tel='';
+  C.items.forEach(function(r){ if(r.tel) tel=r.tel; });
+
+  document.getElementById('app').innerHTML=
+    '<div class="hero">'+
+      '<div class="orn">✦ ✦ ✦</div>'+
+      '<h1>'+C.title+'</h1>'+
+      '<div class="sub">'+C.subtitle+'</div>'+
+      '<div class="names">'+C.groom+'<span class="and">&amp;</span>'+C.bride+'</div>'+
+      '<div class="datebig">'+C.dateText+'</div>'+
+    '</div>'+
+
+    '<div class="count"><div class="t">距 离 好 日 子 还 有</div><div class="boxes" id="cd"></div></div>'+
+
+    '<div class="divider">❦ ❦ ❦</div>'+
+
+    '<div class="info"><h2>宴 席 详 情</h2>'+
+      C.items.map(function(r){
+        return '<div class="row"><div class="k"><i>'+r.i+'</i>'+r.k+'</div>'+
+               '<div class="v">'+r.v+(r.s?'<small>'+r.s+'</small>':'')+'</div></div>';
+      }).join('')+
+    '</div>'+
+
+    '<div class="album"><h2>幸 福 瞬 间</h2><div class="grid">'+
+      C.photos.map(function(p){return '<div class="ph">'+p+'</div>';}).join('')+
+    '</div></div>'+
+
+    '<div class="words"><div class="q">❝</div><p>'+C.words+'</p></div>'+
+
+    (C.rsvp?'<div class="rsvp"><h2>期 待 您 的 到 来</h2>'+
+      '<div class="btns">'+
+        (tel?'<a class="b s" href="tel:'+tel+'">电话联系</a>':'')+
+        '<a class="b p" href="#" onclick="alert(\'已记下您的祝福，期待相见！\')">确认出席</a>'+
+      '</div>'+
+      '<div class="tel">点击按钮即可回复，也可直接致电主人家</div>'+
+    '</div>':'')+
+
+    '<div class="foot"><span class="heart">♥</span> 恭候光临 <span class="heart">♥</span></div>';
+
+  // 倒计时
+  function tick(){
+    var d=new Date(C.target.replace(' ','T'))-new Date();
+    var el=document.getElementById('cd');
+    if(!el) return;
+    if(d<=0){ el.innerHTML='<div class="box"><b>今天</b><span>好日子</span></div>'; return; }
+    var dd=Math.floor(d/86400000),
+        hh=Math.floor(d%86400000/3600000),
+        mm=Math.floor(d%3600000/60000),
+        ss=Math.floor(d%60000/1000);
+    el.innerHTML=
+      '<div class="box"><b>'+dd+'</b><span>天</span></div>'+
+      '<div class="box"><b>'+hh+'</b><span>时</span></div>'+
+      '<div class="box"><b>'+mm+'</b><span>分</span></div>'+
+      '<div class="box"><b>'+ss+'</b><span>秒</span></div>';
+  }
+  tick(); setInterval(tick,1000);
+})();
+</script>
+</body>
+</html>
