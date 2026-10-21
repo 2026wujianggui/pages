@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#D8452E">
+<title>味聚福 · 社区小馆</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:#F5F5F4;color:#1F1D1B;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+  line-height:1.5;-webkit-font-smoothing:antialiased;max-width:560px;margin:0 auto;overflow-x:hidden}
+img{display:block;max-width:100%}
+
+/* ===== 顶部店招 ===== */
+.hero{position:relative;padding:34px 20px 26px;color:#fff;text-align:center;overflow:hidden;
+  background:linear-gradient(160deg,#E8543A 0%,#C43824 55%,#A62C1B 100%)}
+.hero::after{content:"";position:absolute;inset:0;opacity:.13;pointer-events:none;
+  background-image:radial-gradient(circle at 20% 30%,#fff 1px,transparent 1px),
+                   radial-gradient(circle at 70% 60%,#fff 1px,transparent 1px),
+                   radial-gradient(circle at 45% 85%,#fff 1px,transparent 1px);
+  background-size:52px 52px,38px 38px,64px 64px}
+.hero>*{position:relative;z-index:1}
+.logo{width:64px;height:64px;margin:0 auto 12px;border-radius:50%;
+  background:rgba(255,255,255,.16);border:2px solid rgba(255,255,255,.42);
+  display:flex;align-items:center;justify-content:center;font-size:30px}
+.hero h1{font-size:25px;font-weight:800;letter-spacing:2px}
+.slogan{font-size:12.5px;opacity:.9;margin-top:6px;letter-spacing:1px}
+.badges{display:flex;justify-content:center;gap:8px;margin-top:14px;flex-wrap:wrap}
+.badge{font-size:11.5px;padding:4px 11px;border-radius:20px;background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.3)}
+
+/* ===== 优惠 ===== */
+.promo{margin:-14px 14px 0;padding:14px 16px;border-radius:14px;background:#fff;
+  box-shadow:0 4px 18px rgba(0,0,0,.09);position:relative;z-index:2}
+.promo-t{font-size:13px;font-weight:800;color:#C43824;display:flex;align-items:center;gap:6px;margin-bottom:9px}
+.promo-t i{width:16px;height:16px;border-radius:4px;background:#C43824;color:#fff;font-size:10px;
+  display:inline-flex;align-items:center;justify-content:center;font-style:normal}
+.promo li{list-style:none;font-size:13px;color:#444;padding:4px 0;display:flex;gap:8px}
+.promo li b{color:#C43824;font-weight:700;flex-shrink:0}
+
+/* ===== 分类导航 ===== */
+.tabs{display:flex;gap:0;background:#fff;margin:14px 14px 0;border-radius:12px;
+  overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.06);position:sticky;top:0;z-index:5}
+.tab{flex:1;padding:11px 0;text-align:center;font-size:13.5px;font-weight:600;color:#888;
+  border-bottom:2.5px solid transparent;transition:.2s}
+.tab.on{color:#C43824;border-bottom-color:#C43824}
+
+/* ===== 菜单 ===== */
+.sec{padding:16px 14px 4px}
+.sec-h{font-size:14px;font-weight:800;color:#1F1D1B;margin-bottom:11px;display:flex;align-items:center;gap:7px}
+.sec-h::before{content:"";width:4px;height:15px;border-radius:2px;background:#C43824}
+.item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #EDEBE8;align-items:flex-start}
+.item:last-child{border:0}
+.pic{width:66px;height:66px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;
+  justify-content:center;font-size:26px;background:linear-gradient(135deg,#FBE9E4,#F3D6CE)}
+.info{flex:1;min-width:0}
+.nm{font-size:15px;font-weight:700;color:#1F1D1B;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.tag{font-size:10px;padding:2px 6px;border-radius:4px;font-weight:700;flex-shrink:0}
+.tag.hot{background:#FDE8E3;color:#C43824}
+.tag.new{background:#E4F0E4;color:#3B7A3B}
+.ds{font-size:12px;color:#989490;margin-top:4px;line-height:1.45}
+.pr{margin-top:6px;font-size:16px;font-weight:800;color:#C43824}
+.pr small{font-size:11.5px;font-weight:500;color:#B0ACA8;margin-left:3px}
+
+/* ===== 信息卡 ===== */
+.info-card{margin:14px;padding:16px;border-radius:14px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.row{display:flex;gap:11px;padding:10px 0;border-bottom:1px solid #F2F0ED;font-size:13.5px}
+.row:last-child{border:0}
+.row .k{color:#989490;flex-shrink:0;width:52px}
+.row .v{flex:1;color:#333}
+
+/* ===== 底部按钮 ===== */
+.acts{position:sticky;bottom:0;display:flex;gap:10px;padding:12px 14px calc(env(safe-area-inset-bottom,0px) + 12px);
+  background:linear-gradient(180deg,rgba(245,245,244,.4),#F5F5F4 45%)}
+.btn{flex:1;padding:13px 0;border:0;border-radius:12px;font-size:15px;font-weight:700;text-align:center;
+  text-decoration:none;display:block;transition:.15s}
+.btn:active{transform:scale(.97)}
+.btn.p{background:linear-gradient(135deg,#E8543A,#C43824);color:#fff;
+  box-shadow:0 4px 14px rgba(196,56,36,.32)}
+.btn.s{background:#fff;color:#C43824;border:1.6px solid #C43824}
+
+/* ===== 二维码 ===== */
+.qrbox{margin:14px;padding:18px;border-radius:14px;background:#fff;text-align:center;
+  box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.qrbox .t{font-size:13px;color:#666;margin-bottom:12px}
+.qr{width:132px;height:132px;margin:0 auto;background:#F7F6F4;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;
+  border:1.5px dashed #D5D1CD}
+.qr span{font-size:11px;color:#A8A4A0}
+.qr em{font-size:22px;font-style:normal;opacity:.5}
+
+.foot{text-align:center;font-size:11px;color:#B5B1AD;padding:6px 0 18px}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     ★★★ 改这里就能变成任何一家店 ★★★
+     只需修改下面这段 CONFIG，其他都不用动
+     ═══════════════════════════════════════════════ -->
+<script>
+var CONFIG = {
+  name:    "悦颜 · 皮肤管理",
+  slogan:  "一人一方 · 仪器正品 · 无隐形消费",
+  theme:   "#C2185B",
+  heroBg:  "linear-gradient(160deg,#EC407A 0%,#C2185B 55%,#8E1453 100%)",
+  logo:    "🌸",
+  badges:  ["大众点评 4.9分","仪器可验真","一客一换"],
+  promos:  [
+    "<b>体验</b>新客首次到店 98 元体验价",
+    "<b>充值</b>充 1000 送 200，充 3000 送 800",
+    "<b>转介</b>老客带新客，双方各得一次护理"
+  ],
+  menu: [
+    { cat:"面部护理", items:[
+      {n:"深层清洁", p:198, d:"小气泡+注氧，40分钟", t:"hot", e:"🧴"},
+      {n:"玻尿酸补水", p:398, d:"进口原液，仪器导入", t:"hot", e:"💧"},
+      {n:"黄金焕肤", p:598, d:"提亮肤色，淡化暗沉", t:"", e:"✨"},
+      {n:"抗衰紧致", p:898, d:"射频仪器，需预约", t:"new", e:"💠"}
+    ]},
+    { cat:"身体项目", items:[
+      {n:"肩颈疏通", p:268, d:"60分钟，手法+热敷", t:"hot", e:"💆"},
+      {n:"全身SPA", p:598, d:"含精油，120分钟", t:"", e:"🛁"}
+    ]},
+    { cat:"美甲美睫", items:[
+      {n:"纯色美甲", p:128, d:"含卸甲，7天包补", t:"", e:"💅"},
+      {n:"日式美睫", p:268, d:"单根嫁接，自然款", t:"new", e:"👁"}
+    ]},
+    { cat:"会员卡", items:[
+      {n:"次卡 10 次", p:1680, d:"面部项目通用", t:"", e:"💳"},
+      {n:"年卡", p:5980, d:"全年不限次基础护理", t:"hot", e:"👑"}
+    ]}
+  ],
+  info: [
+    {k:"地址", v:"XX市XX区XX商业街 3 楼 305"},
+    {k:"电话", v:"138-0000-0000", tel:"13800000000"},
+    {k:"营业", v:"10:00 - 21:00（需提前预约）"},
+    {k:"停车", v:"商场地下车库，消费免 2 小时"},
+    {k:"预约", v:"微信/电话预约，到店不排队"}
+  ],
+  qrTip: "长按识别 · 添加美容师微信 · 在线预约"
+};
+</script>
+
+<div id="app"></div>
+
+<script>
+(function(){
+  var C = CONFIG;
+  document.documentElement.style.setProperty('--x', C.theme);
+  document.title = C.name;
+  var theme = document.createElement('style');
+  theme.textContent = '.hero{background:'+C.heroBg+'}';
+  document.head.appendChild(theme);
+
+  function menuHtml(list){
+    return list.map(function(it){
+      var tag = it.t==='hot' ? '<span class="tag hot">招牌</span>'
+              : it.t==='new' ? '<span class="tag new">新品</span>' : '';
+      return '<div class="item">'+
+        '<div class="pic">'+it.e+'</div>'+
+        '<div class="info"><div class="nm">'+it.n+tag+'</div>'+
+        '<div class="ds">'+it.d+'</div>'+
+        '<div class="pr">¥'+it.p+'<small> /份</small></div></div></div>';
+    }).join('');
+  }
+
+  var tabs = C.menu.map(function(m,i){
+    return '<div class="tab'+(i===0?' on':'')+'" data-i="'+i+'">'+m.cat+'</div>';
+  }).join('');
+
+  var tel = '';
+  C.info.forEach(function(r){ if(r.tel) tel = r.tel; });
+
+  document.getElementById('app').innerHTML =
+    '<div class="hero">'+
+      '<div class="logo">'+C.logo+'</div>'+
+      '<h1>'+C.name+'</h1>'+
+      '<div class="slogan">'+C.slogan+'</div>'+
+      '<div class="badges">'+C.badges.map(function(b){return '<span class="badge">'+b+'</span>';}).join('')+'</div>'+
+    '</div>'+
+
+    '<div class="promo"><div class="promo-t"><i>惠</i>店内活动</div><ul>'+
+      C.promos.map(function(p){return '<li>'+p+'</li>';}).join('')+'</ul></div>'+
+
+    '<div class="tabs" id="tabs">'+tabs+'</div>'+
+    '<div id="menu"></div>'+
+
+    '<div class="info-card">'+C.info.map(function(r){
+      return '<div class="row"><div class="k">'+r.k+'</div><div class="v">'+r.v+'</div></div>';
+    }).join('')+'</div>'+
+
+    '<div class="qrbox"><div class="t">'+C.qrTip+'</div>'+
+      '<div class="qr"><em>▣</em><span>此处替换为你的微信二维码</span></div></div>'+
+
+    '<div class="foot">本页由商家自主发布 · 最终解释权归商家所有</div>'+
+
+    '<div class="acts">'+
+      (tel?'<a class="btn s" href="tel:'+tel+'">立即拨号</a>':'')+
+      '<a class="btn p" href="#" onclick="alert(\'复制本页链接发给朋友即可\')">分享给朋友</a>'+
+    '</div>';
+
+  var menuEl = document.getElementById('menu');
+  function show(i){
+    menuEl.innerHTML = '<div class="sec"><div class="sec-h">'+C.menu[i].cat+'</div>'+menuHtml(C.menu[i].items)+'</div>';
+    [].forEach.call(document.querySelectorAll('.tab'),function(t,idx){
+      t.classList.toggle('on', idx===i);
+    });
+  }
+  [].forEach.call(document.querySelectorAll('.tab'),function(t){
+    t.addEventListener('click',function(){ show(+t.getAttribute('data-i')); });
+  });
+  show(0);
+})();
+</script>
+</body>
+</html>
