@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#D8452E">
+<title>味聚福 · 社区小馆</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:#F5F5F4;color:#1F1D1B;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+  line-height:1.5;-webkit-font-smoothing:antialiased;max-width:560px;margin:0 auto;overflow-x:hidden}
+img{display:block;max-width:100%}
+
+/* ===== 顶部店招 ===== */
+.hero{position:relative;padding:34px 20px 26px;color:#fff;text-align:center;overflow:hidden;
+  background:linear-gradient(160deg,#E8543A 0%,#C43824 55%,#A62C1B 100%)}
+.hero::after{content:"";position:absolute;inset:0;opacity:.13;pointer-events:none;
+  background-image:radial-gradient(circle at 20% 30%,#fff 1px,transparent 1px),
+                   radial-gradient(circle at 70% 60%,#fff 1px,transparent 1px),
+                   radial-gradient(circle at 45% 85%,#fff 1px,transparent 1px);
+  background-size:52px 52px,38px 38px,64px 64px}
+.hero>*{position:relative;z-index:1}
+.logo{width:64px;height:64px;margin:0 auto 12px;border-radius:50%;
+  background:rgba(255,255,255,.16);border:2px solid rgba(255,255,255,.42);
+  display:flex;align-items:center;justify-content:center;font-size:30px}
+.hero h1{font-size:25px;font-weight:800;letter-spacing:2px}
+.slogan{font-size:12.5px;opacity:.9;margin-top:6px;letter-spacing:1px}
+.badges{display:flex;justify-content:center;gap:8px;margin-top:14px;flex-wrap:wrap}
+.badge{font-size:11.5px;padding:4px 11px;border-radius:20px;background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.3)}
+
+/* ===== 优惠 ===== */
+.promo{margin:-14px 14px 0;padding:14px 16px;border-radius:14px;background:#fff;
+  box-shadow:0 4px 18px rgba(0,0,0,.09);position:relative;z-index:2}
+.promo-t{font-size:13px;font-weight:800;color:#C43824;display:flex;align-items:center;gap:6px;margin-bottom:9px}
+.promo-t i{width:16px;height:16px;border-radius:4px;background:#C43824;color:#fff;font-size:10px;
+  display:inline-flex;align-items:center;justify-content:center;font-style:normal}
+.promo li{list-style:none;font-size:13px;color:#444;padding:4px 0;display:flex;gap:8px}
+.promo li b{color:#C43824;font-weight:700;flex-shrink:0}
+
+/* ===== 分类导航 ===== */
+.tabs{display:flex;gap:0;background:#fff;margin:14px 14px 0;border-radius:12px;
+  overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.06);position:sticky;top:0;z-index:5}
+.tab{flex:1;padding:11px 0;text-align:center;font-size:13.5px;font-weight:600;color:#888;
+  border-bottom:2.5px solid transparent;transition:.2s}
+.tab.on{color:#C43824;border-bottom-color:#C43824}
+
+/* ===== 菜单 ===== */
+.sec{padding:16px 14px 4px}
+.sec-h{font-size:14px;font-weight:800;color:#1F1D1B;margin-bottom:11px;display:flex;align-items:center;gap:7px}
+.sec-h::before{content:"";width:4px;height:15px;border-radius:2px;background:#C43824}
+.item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #EDEBE8;align-items:flex-start}
+.item:last-child{border:0}
+.pic{width:66px;height:66px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;
+  justify-content:center;font-size:26px;background:linear-gradient(135deg,#FBE9E4,#F3D6CE)}
+.info{flex:1;min-width:0}
+.nm{font-size:15px;font-weight:700;color:#1F1D1B;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.tag{font-size:10px;padding:2px 6px;border-radius:4px;font-weight:700;flex-shrink:0}
+.tag.hot{background:#FDE8E3;color:#C43824}
+.tag.new{background:#E4F0E4;color:#3B7A3B}
+.ds{font-size:12px;color:#989490;margin-top:4px;line-height:1.45}
+.pr{margin-top:6px;font-size:16px;font-weight:800;color:#C43824}
+.pr small{font-size:11.5px;font-weight:500;color:#B0ACA8;margin-left:3px}
+
+/* ===== 信息卡 ===== */
+.info-card{margin:14px;padding:16px;border-radius:14px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.row{display:flex;gap:11px;padding:10px 0;border-bottom:1px solid #F2F0ED;font-size:13.5px}
+.row:last-child{border:0}
+.row .k{color:#989490;flex-shrink:0;width:52px}
+.row .v{flex:1;color:#333}
+
+/* ===== 底部按钮 ===== */
+.acts{position:sticky;bottom:0;display:flex;gap:10px;padding:12px 14px calc(env(safe-area-inset-bottom,0px) + 12px);
+  background:linear-gradient(180deg,rgba(245,245,244,.4),#F5F5F4 45%)}
+.btn{flex:1;padding:13px 0;border:0;border-radius:12px;font-size:15px;font-weight:700;text-align:center;
+  text-decoration:none;display:block;transition:.15s}
+.btn:active{transform:scale(.97)}
+.btn.p{background:linear-gradient(135deg,#E8543A,#C43824);color:#fff;
+  box-shadow:0 4px 14px rgba(196,56,36,.32)}
+.btn.s{background:#fff;color:#C43824;border:1.6px solid #C43824}
+
+/* ===== 二维码 ===== */
+.qrbox{margin:14px;padding:18px;border-radius:14px;background:#fff;text-align:center;
+  box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.qrbox .t{font-size:13px;color:#666;margin-bottom:12px}
+.qr{width:132px;height:132px;margin:0 auto;background:#F7F6F4;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;
+  border:1.5px dashed #D5D1CD}
+.qr span{font-size:11px;color:#A8A4A0}
+.qr em{font-size:22px;font-style:normal;opacity:.5}
+
+.foot{text-align:center;font-size:11px;color:#B5B1AD;padding:6px 0 18px}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     ★★★ 改这里就能变成任何一家店 ★★★
+     只需修改下面这段 CONFIG，其他都不用动
+     ═══════════════════════════════════════════════ -->
+<script>
+var CONFIG = {
+  name:    "果然鲜 · 社区果铺",
+  slogan:  "当日现采 · 不好吃包退 · 免费切",
+  theme:   "#43A047",
+  heroBg:  "linear-gradient(160deg,#66BB6A 0%,#43A047 55%,#2E7D32 100%)",
+  logo:    "🍎",
+  badges:  ["当日现采","免费切盒","2公里送到家"],
+  promos:  [
+    "<b>新客</b>首次下单送香蕉一把",
+    "<b>满减</b>满 39 减 5，满 69 减 12",
+    "<b>会员</b>充值 200 送 30，每周专享价"
+  ],
+  menu: [
+    { cat:"时令水果", items:[
+      {n:"赣南脐橙", p:8.8, d:"现摘现发，甜度 13°", t:"hot", e:"🍊"},
+      {n:"海南香蕉", p:5.5, d:"自然熟，不打药", t:"", e:"🍌"},
+      {n:"红富士苹果", p:9.9, d:"烟台产地，脆甜", t:"hot", e:"🍎"}
+    ]},
+    { cat:"进口精选", items:[
+      {n:"泰国金枕榴莲", p:32, d:"包开，不熟包换", t:"hot", e:"🧀"},
+      {n:"智利车厘子", p:58, d:"JJ 级，坏果包赔", t:"new", e:"🍒"},
+      {n:"越南红心火龙果", p:16, d:"甜度高，现切", t:"", e:"🌵"}
+    ]},
+    { cat:"果切果捞", items:[
+      {n:"混合果切盒", p:18, d:"5 种水果，每日现切", t:"hot", e:"🥣"},
+      {n:"酸奶果捞", p:22, d:"含坚果+麦片", t:"new", e:"🥛"}
+    ]},
+    { cat:"礼盒定制", items:[
+      {n:"水果礼盒 小", p:88, d:"6 种装，配手提袋", t:"", e:"🎁"},
+      {n:"水果礼盒 大", p:168, d:"10 种装，可定制贺卡", t:"hot", e:"💝"}
+    ]}
+  ],
+  info: [
+    {k:"地址", v:"XX市XX区XX路 15 号（菜市场对面）"},
+    {k:"电话", v:"138-0000-0000", tel:"13800000000"},
+    {k:"营业", v:"07:00 - 22:00"},
+    {k:"配送", v:"2 公里内免费送，30 分钟到"},
+    {k:"承诺", v:"不好吃包退，坏果包赔，不甜不要钱"}
+  ],
+  qrTip: "长按识别 · 添加店主微信 · 下单/配送"
+};
+</script>
+
+<div id="app"></div>
+
+<script>
+(function(){
+  var C = CONFIG;
+  document.documentElement.style.setProperty('--x', C.theme);
+  document.title = C.name;
+  var theme = document.createElement('style');
+  theme.textContent = '.hero{background:'+C.heroBg+'}';
+  document.head.appendChild(theme);
+
+  function menuHtml(list){
+    return list.map(function(it){
+      var tag = it.t==='hot' ? '<span class="tag hot">招牌</span>'
+              : it.t==='new' ? '<span class="tag new">新品</span>' : '';
+      return '<div class="item">'+
+        '<div class="pic">'+it.e+'</div>'+
+        '<div class="info"><div class="nm">'+it.n+tag+'</div>'+
+        '<div class="ds">'+it.d+'</div>'+
+        '<div class="pr">¥'+it.p+'<small> /份</small></div></div></div>';
+    }).join('');
+  }
+
+  var tabs = C.menu.map(function(m,i){
+    return '<div class="tab'+(i===0?' on':'')+'" data-i="'+i+'">'+m.cat+'</div>';
+  }).join('');
+
+  var tel = '';
+  C.info.forEach(function(r){ if(r.tel) tel = r.tel; });
+
+  document.getElementById('app').innerHTML =
+    '<div class="hero">'+
+      '<div class="logo">'+C.logo+'</div>'+
+      '<h1>'+C.name+'</h1>'+
+      '<div class="slogan">'+C.slogan+'</div>'+
+      '<div class="badges">'+C.badges.map(function(b){return '<span class="badge">'+b+'</span>';}).join('')+'</div>'+
+    '</div>'+
+
+    '<div class="promo"><div class="promo-t"><i>惠</i>店内活动</div><ul>'+
+      C.promos.map(function(p){return '<li>'+p+'</li>';}).join('')+'</ul></div>'+
+
+    '<div class="tabs" id="tabs">'+tabs+'</div>'+
+    '<div id="menu"></div>'+
+
+    '<div class="info-card">'+C.info.map(function(r){
+      return '<div class="row"><div class="k">'+r.k+'</div><div class="v">'+r.v+'</div></div>';
+    }).join('')+'</div>'+
+
+    '<div class="qrbox"><div class="t">'+C.qrTip+'</div>'+
+      '<div class="qr"><em>▣</em><span>此处替换为你的微信二维码</span></div></div>'+
+
+    '<div class="foot">本页由商家自主发布 · 最终解释权归商家所有</div>'+
+
+    '<div class="acts">'+
+      (tel?'<a class="btn s" href="tel:'+tel+'">立即拨号</a>':'')+
+      '<a class="btn p" href="#" onclick="alert(\'复制本页链接发给朋友即可\')">分享给朋友</a>'+
+    '</div>';
+
+  var menuEl = document.getElementById('menu');
+  function show(i){
+    menuEl.innerHTML = '<div class="sec"><div class="sec-h">'+C.menu[i].cat+'</div>'+menuHtml(C.menu[i].items)+'</div>';
+    [].forEach.call(document.querySelectorAll('.tab'),function(t,idx){
+      t.classList.toggle('on', idx===i);
+    });
+  }
+  [].forEach.call(document.querySelectorAll('.tab'),function(t){
+    t.addEventListener('click',function(){ show(+t.getAttribute('data-i')); });
+  });
+  show(0);
+})();
+</script>
+</body>
+</html>
