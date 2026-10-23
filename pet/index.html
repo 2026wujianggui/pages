@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#F59E0B">
+<title>阿橘的故事 · 制作手册</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:#FFFBF3;color:#3D3229;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+ line-height:1.65;max-width:560px;margin:0 auto;overflow-x:hidden;-webkit-font-smoothing:antialiased;padding-bottom:20px}
+
+.hero{padding:32px 20px 26px;text-align:center;color:#fff;
+ background:linear-gradient(160deg,#FBBF24 0%,#F59E0B 50%,#D97706 100%)}
+.hero .ic{font-size:44px;margin-bottom:8px}
+.hero h1{font-size:23px;font-weight:800;letter-spacing:1px}
+.hero .s{font-size:12.5px;opacity:.93;margin-top:6px}
+.hero .tag{margin-top:14px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.hero .tag span{font-size:11px;padding:4px 10px;border-radius:20px;
+ background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35)}
+
+.card{margin:13px 13px 0;padding:16px;border-radius:14px;background:#fff;
+ box-shadow:0 3px 13px rgba(120,80,20,.08)}
+.card h2{font-size:14.5px;font-weight:800;margin-bottom:11px;display:flex;align-items:center;gap:7px}
+.card h2::before{content:"";width:4px;height:15px;border-radius:2px;background:#F59E0B}
+.card h3{font-size:13.5px;font-weight:700;margin:12px 0 6px;color:#B45309}
+
+.box{background:#FAFAF9;border:1px solid #EDE9E2;border-radius:10px;padding:12px;
+ font-size:12.5px;color:#4A4038;line-height:1.75;white-space:pre-wrap;
+ word-break:break-all;margin:8px 0;position:relative}
+.box .lb{font-size:10.5px;color:#A8A29E;display:block;margin-bottom:6px;font-weight:700}
+.cp{position:absolute;top:8px;right:8px;font-size:10.5px;padding:3px 9px;border-radius:6px;
+ background:#F59E0B;color:#fff;border:0;font-weight:700}
+
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:6px 0}
+th{background:#FEF3C7;padding:8px 6px;text-align:left;font-size:11.5px;color:#92400E}
+td{padding:8px 6px;border-bottom:1px solid #F2EEE8;vertical-align:top}
+tr:last-child td{border:0}
+
+ul{padding-left:0;list-style:none}
+ul li{font-size:13px;padding:6px 0;display:flex;gap:8px;color:#54493E}
+ul li b{color:#D97706;flex-shrink:0}
+
+.step{display:flex;gap:11px;padding:10px 0;border-bottom:1px dashed #F0EBE3;align-items:flex-start}
+.step:last-child{border:0}
+.step .no{width:25px;height:25px;border-radius:50%;background:#F59E0B;color:#fff;font-size:12.5px;
+ font-weight:700;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.step .ct{flex:1;font-size:13px}
+.step .ct b{display:block;margin-bottom:2px}
+.step .ct span{font-size:12px;color:#9C948A}
+
+.warn{background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;padding:12px;margin:8px 0}
+.warn .t{font-size:12.5px;font-weight:800;color:#DC2626;margin-bottom:6px}
+.warn .c{font-size:12.5px;color:#7F1D1D;line-height:1.7}
+
+.ok{background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;padding:12px;margin:8px 0}
+.ok .t{font-size:12.5px;font-weight:800;color:#16A34A;margin-bottom:6px}
+.ok .c{font-size:12.5px;color:#14532D;line-height:1.7}
+
+.foot{text-align:center;font-size:11px;color:#B5ADA3;padding:16px 0 6px}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="ic">🐱</div>
+  <h1>阿橘的故事 · 制作手册</h1>
+  <div class="s">一个人 · 一部手机 · 做出能连载的 AI 萌宠系列</div>
+  <div class="tag"><span>日更 1 条</span><span>每集 30 秒</span><span>边际成本 0</span></div>
+</div>
+
+<div class="card">
+  <h2>先看现实预期</h2>
+  <table>
+    <tr><th>阶段</th><th>大概</th></tr>
+    <tr><td>第 1–4 周</td><td>每条几百播放，收入 0</td></tr>
+    <tr><td>第 2–3 月</td><td>偶发小爆款，分成几十</td></tr>
+    <tr><td>第 4–6 月</td><td>单条几千～几万，首次商单</td></tr>
+    <tr><td>6 个月后</td><td>粉丝过万，商单 / 带货</td></tr>
+  </table>
+  <div class="warn">
+    <div class="t">⚠️ 一句话泼冷水</div>
+    <div class="c">2026 上半年新上线 AI 短剧超 22 万部，播放破亿的只有 1055 部，破亿率不到 0.5%；98.7% 半年内回不了本。<br><br>
+    <b>这不是"做几条就赚"，是"连载 3 个月才见回头钱"。</b><br>
+    如果这个月就要现金 —— 同时挂闲鱼接定制单（50–200/条），两条腿走路。</div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>角色定妆（最关键）</h2>
+  <table>
+    <tr><th>角色</th><th>性格</th><th>视觉</th></tr>
+    <tr><td><b>阿橘</b><br>主角</td><td>贪吃、憨、运气差</td><td>橘色胖猫，圆脸鼓腮，黄围裙</td></tr>
+    <tr><td><b>雪球</b><br>配角</td><td>高冷、毒舌、聪明</td><td>白色比熊，三角耳，蓝领结</td></tr>
+  </table>
+
+  <h3>胖橘定妆提示词（复制到即梦/豆包生图）</h3>
+  <div class="box" id="b1"><span class="lb">点击右上角复制</span>一只橘色胖猫，拟人化站立，圆脸鼓腮帮，大眼睛，穿着黄色小围裙，3D卡通渲染，潮玩盲盒质感，正面全身，表情开心，柔和棚拍光，纯色浅灰背景，高清，全身入镜，无文字</div>
+
+  <h3>雪球定妆提示词</h3>
+  <div class="box" id="b2"><span class="lb">点击右上角复制</span>一只白色小比熊犬，拟人化站立，三角耳，圆眼睛，戴蓝色小领结，3D卡通渲染，潮玩盲盒质感，正面全身，表情高冷，柔和棚拍光，纯色浅灰背景，高清，全身入镜，无文字</div>
+
+  <div class="ok">
+    <div class="t">✓ 生图三要点</div>
+    <div class="c">
+      1. <b>正面、全身、纯色背景、光线均匀</b> —— 越像证件照越稳<br>
+      2. 生成 10 张挑 1 张最满意的，<b>存下来</b>，后面每集都用它当参考图<br>
+      3. <b>定妆图定了就别换</b>，换一次观众就流失一批
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>前 10 集剧本（拿去即用）</h2>
+  <table>
+    <tr><th>集</th><th>剧情</th><th>钩子</th></tr>
+    <tr><td>1</td><td>阿橘去奶茶店打工，把珍珠全吃了</td><td>老板来了…</td></tr>
+    <tr><td>2</td><td>立志减肥，路过炸鸡店走不动路</td><td>它推门进去了</td></tr>
+    <tr><td>3</td><td>自动售货机卡币，它伸手进去掏</td><td>手拔不出来了</td></tr>
+    <tr><td>4</td><td>雪球装高冷，偷偷对镜子练表情</td><td>被阿橘撞见</td></tr>
+    <tr><td>5</td><td>阿橘装病请假，被雪球拆穿</td><td>体温计是暖宝宝</td></tr>
+    <tr><td>6</td><td>两人点一大桌火锅，结账互相装傻</td><td>服务员来了</td></tr>
+    <tr><td>7</td><td>学骑车摔八次，最后骑上了雕塑</td><td>雕塑动了</td></tr>
+    <tr><td>8</td><td>雪球半夜偷偷在厨房做什么</td><td>一整盘猫粮</td></tr>
+    <tr><td>9</td><td>以为中奖十万，结果是再来一瓶</td><td>它哭了</td></tr>
+    <tr><td>10</td><td>以为没人记得生日，雪球准备了蛋糕</td><td>蛋糕是雪球自己的</td></tr>
+  </table>
+  <div class="ok"><div class="c">每集 30 秒 ≈ <b>6 个镜头 × 5 秒</b>。结构统一：小事件 + 结尾留钩子。</div></div>
+</div>
+
+<div class="card">
+  <h2>分镜提示词（照抄改词）</h2>
+  <h3>发给豆包/DeepSeek，让它帮你拆分镜：</h3>
+  <div class="box" id="b3"><span class="lb">点击右上角复制</span>帮我把这集剧本拆成 6 个分镜，每个分镜给出：
+1. 画面描述（中文，给图生视频用）
+2. 镜头景别（特写/中景/全景）
+3. 时长（5秒）
+
+要求：
+- 主角形象严格一致（橘色胖猫，圆脸，黄围裙）
+- 风格统一为暖色 3D 卡通
+- 每句话都要能直接粘进即梦/可灵的图生视频
+
+剧本：
+【把剧情粘到这里】</div>
+
+  <h3>单个镜头怎么写</h3>
+  <div class="warn">
+    <div class="t">❌ 别这么写（太抽象，AI 会乱）</div>
+    <div class="c">猫在做饭</div>
+  </div>
+  <div class="ok">
+    <div class="t">✓ 这么写（慢、具体、带情绪）</div>
+    <div class="c">橘色胖猫，黄围裙，站在小厨房灶台前，慢慢抬起右手用锅铲翻炒，身体微微前倾，表情认真，暖色灯光，3D卡通，镜头固定，5秒</div>
+  </div>
+  <ul>
+    <li><b>1</b> 动作写慢 —— "快速翻滚"必崩，"慢慢转身"稳</li>
+    <li><b>2</b> 一个镜头只干一件事</li>
+    <li><b>3</b> 每段 5 秒，别贪长，长了必变形</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>制作流程（一集约 20 分钟）</h2>
+  <div class="step"><div class="no">1</div><div class="ct"><b>选剧本</b><span>1 分钟</span></div></div>
+  <div class="step"><div class="no">2</div><div class="ct"><b>豆包生成 6 个分镜提示词</b><span>2 分钟</span></div></div>
+  <div class="step"><div class="no">3</div><div class="ct"><b>即梦：定妆图 + 提示词 → 生成 6 段</b><span>10 分钟</span></div></div>
+  <div class="step"><div class="no">4</div><div class="ct"><b>剪映：拼接 + 转场 + BGM + 自动字幕</b><span>5 分钟</span></div></div>
+  <div class="step"><div class="no">5</div><div class="ct"><b>发布</b><span>2 分钟</span></div></div>
+
+  <h3>工具</h3>
+  <table>
+    <tr><th>用途</th><th>用哪个</th></tr>
+    <tr><td>写剧本/分镜</td><td>豆包 / DeepSeek（免费）</td></tr>
+    <tr><td>生定妆图</td><td>即梦 / Gemini</td></tr>
+    <tr><td>图生视频</td><td><b>即梦 Seedance</b>（每天送积分）</td></tr>
+    <tr><td>备选</td><td>可灵（动作更自然）</td></tr>
+    <tr><td>剪辑</td><td><b>剪映</b></td></tr>
+  </table>
+</div>
+
+<div class="card">
+  <h2>发布节奏（比内容更重要）</h2>
+  <table>
+    <tr><th>项</th><th>建议</th></tr>
+    <tr><td>频率</td><td><b>日更 1 条</b>，最少隔天</td></tr>
+    <tr><td>时间</td><td>12:00 或 19:00–21:00</td></tr>
+    <tr><td>标题</td><td>《阿橘的故事》第 X 集：一句话钩子</td></tr>
+    <tr><td>封面</td><td>每集固定样式，一眼认出</td></tr>
+    <tr><td>标签</td><td>#AI萌宠 #萌宠短剧 #猫咪 #搞笑</td></tr>
+  </table>
+  <div class="warn"><div class="c"><b>断更是连载 IP 的第一大敌。</b>宁可一天发一条 15 秒的，也别三天不发。</div></div>
+</div>
+
+<div class="card">
+  <h2>四个必踩的坑</h2>
+  <ul>
+    <li><b>1</b> <b>别做泛娱乐同质化</b> —— "猫做饭""猫挤地铁"已烂大街。要么切垂直（宠物好物/饮食），要么人设做到极致</li>
+    <li><b>2</b> <b>别用单条思维做连载</b> —— 集数才是护城河</li>
+    <li><b>3</b> <b>别只追播放不变现</b> —— 第一集就要想好靠什么赚钱</li>
+    <li><b>4</b> <b>别断更</b> —— 上面说过了，再说一遍</li>
+  </ul>
+  <div class="warn">
+    <div class="t">⚠️ 版权提醒</div>
+    <div class="c">BGM 只用剪映自带的（有授权），别用没版权的流行歌。动物形象没问题，但别抄别人的具体角色造型。平台对低质 AI 动画已限流 —— 清晰度、帧率要达标，还得有点小故事性。</div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>今天就开始的三件事</h2>
+  <div class="step"><div class="no">1</div><div class="ct"><b>生成定妆图</b><span>用上面的提示词，即梦里出 10 张，挑 1 张存好</span></div></div>
+  <div class="step"><div class="no">2</div><div class="ct"><b>跑通第 1 集</b><span>完整做一条出来，哪怕做得丑</span></div></div>
+  <div class="step"><div class="no">3</div><div class="ct"><b>发出去</b><span>别等完美，数据会告诉你怎么改</span></div></div>
+</div>
+
+<div class="foot">这个赛道已经卷了。最早做的人月入几十万，现在进来能喝到汤就不错。<br>
+但它有个别人没有的优势 —— <b>你的边际成本是零</b>。<br>
+别人放弃了你还在更，你就赢了。</div>
+
+<script>
+document.querySelectorAll('.box').forEach(function(b){
+  var btn=document.createElement('button');
+  btn.className='cp'; btn.textContent='复制';
+  btn.onclick=function(){
+    var t=b.innerText.replace('点击右上角复制\n','').replace('点击右上角复制','');
+    var ta=document.createElement('textarea');
+    ta.value=t.trim(); document.body.appendChild(ta); ta.select();
+    try{document.execCommand('copy'); btn.textContent='✓ 已复制';}catch(e){btn.textContent='长按复制';}
+    document.body.removeChild(ta);
+    setTimeout(function(){btn.textContent='复制';},1800);
+  };
+  b.appendChild(btn);
+});
+</script>
+</body>
+</html>
