@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#0a0e14">
+<title>动物视觉相机 · 看看主子眼里的你</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden}
+body{background:#0a0e14;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+ -webkit-font-smoothing:antialiased;user-select:none}
+
+#wrap{position:fixed;inset:0;display:flex;flex-direction:column}
+
+/* 顶部 */
+#top{position:relative;z-index:20;padding:calc(env(safe-area-inset-top,0px) + 10px) 14px 8px;
+ background:linear-gradient(180deg,rgba(10,14,20,.88),rgba(10,14,20,0))}
+#top .row{display:flex;align-items:center;justify-content:space-between}
+#aname{font-size:17px;font-weight:800;letter-spacing:.5px}
+#aname small{font-size:11px;font-weight:500;opacity:.65;margin-left:6px}
+#flip{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.22);
+ background:rgba(255,255,255,.08);color:#fff;font-size:17px;display:flex;
+ align-items:center;justify-content:center}
+#desc{margin-top:7px;font-size:11.5px;line-height:1.5;opacity:.78;max-width:100%}
+
+/* 画面 */
+#stage{position:relative;flex:1;overflow:hidden;background:#000}
+#cv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+#hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+ text-align:center;padding:30px;font-size:13.5px;line-height:1.8;color:#9aa;z-index:5}
+#hint b{display:block;font-size:15px;color:#fff;margin-bottom:8px}
+
+/* 底部选择 */
+#pick{position:relative;z-index:20;padding:10px 0 calc(env(safe-area-inset-bottom,0px) + 8px);
+ background:linear-gradient(0deg,rgba(10,14,20,.94),rgba(10,14,20,.55) 60%,rgba(10,14,20,0))}
+#list{display:flex;gap:9px;overflow-x:auto;padding:4px 14px 8px;scrollbar-width:none}
+#list::-webkit-scrollbar{display:none}
+.it{flex-shrink:0;width:56px;text-align:center;opacity:.45;transition:.18s}
+.it.on{opacity:1}
+.it .em{width:48px;height:48px;margin:0 auto;border-radius:14px;font-size:25px;
+ display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.09);
+ border:1.5px solid transparent;transition:.18s}
+.it.on .em{border-color:#4ADE80;background:rgba(74,222,128,.16);transform:translateY(-2px)}
+.it .nm{font-size:10.5px;margin-top:4px;letter-spacing:.2px}
+
+/* 快门 */
+#shut{display:flex;align-items:center;justify-content:center;gap:22px;padding:2px 0 6px}
+#cap{width:62px;height:62px;border-radius:50%;border:3px solid #fff;background:transparent;
+ position:relative;flex-shrink:0}
+#cap::after{content:"";position:absolute;inset:7px;border-radius:50%;background:#fff}
+#cap:active::after{transform:scale(.9)}
+#cmp{width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(255,255,255,.3);
+ background:rgba(255,255,255,.07);color:#fff;font-size:8.5px;font-weight:700;
+ display:flex;align-items:center;justify-content:center;line-height:1.1;text-align:center}
+#cmp.on{background:rgba(74,222,128,.22);border-color:#4ADE80;color:#4ADE80}
+
+/* 科普卡 */
+#info{position:absolute;inset:0;z-index:40;background:rgba(6,9,13,.96);
+ padding:calc(env(safe-area-inset-top,0px) + 18px) 18px 18px;overflow-y:auto;display:none}
+#info.show{display:block}
+#info h2{font-size:19px;font-weight:800;margin-bottom:4px}
+#info .sub{font-size:11.5px;opacity:.6;margin-bottom:16px}
+#info .kv{display:flex;gap:10px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:13px}
+#info .kv .k{width:76px;flex-shrink:0;opacity:.55;font-size:12px}
+#info .kv .v{flex:1;line-height:1.6}
+#note{margin-top:16px;padding:12px;border-radius:10px;background:rgba(255,193,7,.1);
+ border:1px solid rgba(255,193,7,.25);font-size:11.5px;line-height:1.7;color:#FCD34D}
+#close{margin-top:18px;width:100%;padding:13px 0;border:0;border-radius:12px;
+ background:#fff;color:#0a0e14;font-size:14.5px;font-weight:700}
+
+#toast{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:60;
+ padding:12px 20px;border-radius:12px;background:rgba(0,0,0,.85);font-size:13.5px;
+ display:none;text-align:center}
+video{display:none}
+</style>
+</head>
+<body>
+<div id="wrap">
+
+  <div id="top">
+    <div class="row">
+      <div id="aname">猫 <small>二色视觉 · 红绿色盲</small></div>
+      <button id="flip">🔄</button>
+    </div>
+    <div id="desc"></div>
+  </div>
+
+  <div id="stage">
+    <canvas id="cv"></canvas>
+    <video id="vd" playsinline autoplay muted></video>
+    <div id="hint"><b>正在打开摄像头…</b>请允许相机权限<br>把镜头对准你家主子试试</div>
+  </div>
+
+  <div id="pick">
+    <div id="list"></div>
+    <div id="shut">
+      <button id="cmp">科普<br>说明</button>
+      <button id="cap"></button>
+      <div style="width:40px"></div>
+    </div>
+  </div>
+
+</div>
+
+<div id="info">
+  <h2 id="iTitle"></h2>
+  <div class="sub" id="iSub"></div>
+  <div id="iBody"></div>
+  <div id="note"></div>
+  <button id="close">知道了</button>
+</div>
+
+<div id="toast"></div>
+
+<script>
+var SW=360, SH=480;
+
+var ANIMALS=[
+ {k:'cat',   e:'🐱', n:'猫',    s:'二色视觉',
+  d:'只分得清蓝和绿，红色在它眼里是暗灰。视敏度只有人的 1/5，所以它看你是模糊的。',
+  info:[['视锥细胞','两种（蓝紫 ~450nm + 黄绿 ~556nm），缺少红色视锥'],
+        ['色彩','红、橙、粉在它眼里都偏暗灰黄；蓝、绿、黄能分辨'],
+        ['清晰度','约为人类的 1/5～1/10，20 米外基本看不清细节'],
+        ['视野','约 200°（人约 180°），余光范围更大'],
+        ['夜视','有照膜（tapetum lucidum），夜视能力是人的 6～8 倍'],
+        ['动态','对运动极其敏感，微小动作都能捕捉；但静止物体容易"视而不见"']]},
+ {k:'dog',   e:'🐶', n:'狗',    s:'蓝黄世界',
+  d:'不是全色盲，而是红绿色盲。它眼中的世界以蓝、黄、灰为主，红绿都变成土黄色。',
+  info:[['视锥细胞','两种（蓝 ~429nm + 黄绿 ~555nm），缺红色视锥'],
+        ['色彩','红、绿在它眼里接近土黄/灰；蓝色和黄色最鲜明'],
+        ['清晰度','约为人类的 1/4，20/75 视力左右'],
+        ['视野','因品种而异，约 240°（长鼻犬更宽，短鼻犬更接近人）'],
+        ['动态','对运动敏感度高，靠鼻子弥补视觉不足']]},
+ {k:'bee',   e:'🐝', n:'蜜蜂',  s:'紫外视觉',
+  d:'看不见红色（红花在它眼里是黑的），但能看到紫外线——花朵上有专给蜜蜂指路的"降落跑道"。',
+  info:[['视锥细胞','三种，但偏移：紫外(~344nm) + 蓝(~436nm) + 绿(~544nm)'],
+        ['色彩','红色 = 黑色；能看见紫外光下花蜜的"蜜导"图案'],
+        ['清晰度','很低，复眼成像粗糙，约人的 1/100'],
+        ['视野','近 360°，几乎无死角'],
+        ['特殊','能感知偏振光，靠太阳方位导航；闪光融合频率高，看慢动作']]},
+ {k:'snake', e:'🐍', n:'蛇',    s:'热成像',
+  d:'蝮蛇的颊窝能感知 0.003℃ 的温差，在完全黑暗中"看见"猎物的体温。',
+  info:[['感知方式','颊窝器官（pit organ）感知红外热辐射，非可见光'],
+        ['灵敏度','可探测 0.003℃ 的温差，探测距离约 1 米'],
+        ['画面','没有颜色和形状，是一幅随温度变化的"热图"'],
+        ['原理','相当于生物版红外热像仪，黑暗中也能锁定温血猎物'],
+        ['补充','蛇本身的可见光视力很差，主要靠热感应+嗅觉']]},
+ {k:'fly',   e:'🪰', n:'苍蝇',  s:'复眼马赛克',
+  d:'两只复眼由约 4000 个小眼拼成，看到的是马赛克世界，但对运动反应快到你打不着。',
+  info:[['结构','复眼约 4000 个小眼（ommatidia），每个小眼是一个独立像素'],
+        ['画面','像素化的马赛克世界，分辨率极低但时间分辨率极高'],
+        ['动态','闪光融合频率约 250Hz（人约 60Hz），在它眼里你的动作是慢动作'],
+        ['视野','接近 360°，难怪总是打不到它'],
+        ['颜色','能分辨颜色，紫外敏感']]},
+ {k:'eagle', e:'🦅', n:'鹰',    s:'四色·超清',
+  d:'视敏度是人的 4～8 倍，能在 1 公里外看清兔子。还能看到紫外线，靠尿迹追踪猎物。',
+  info:[['视锥细胞','四种（含紫外），比人类多一种'],
+        ['清晰度','约为人类的 4～8 倍，1 公里外可分辨小型猎物'],
+        ['中央凹','每只眼有中央凹和侧中央凹，相当于自带望远镜+广角'],
+        ['紫外','能看见紫外光，靠鼠类尿迹的反光追踪猎物'],
+        ['视野','约 340°，前方有双目重叠区用于测距']]},
+ {k:'shark', e:'🦈', n:'鲨鱼',  s:'高对比灰阶',
+  d:'几乎没有彩色视觉，只有视杆细胞。世界是高对比度的灰阶——但对明暗反差极其敏感。',
+  info:[['视锥细胞','多数鲨鱼没有视锥细胞，基本是色盲'],
+        ['色彩','世界是灰阶的，水下偏蓝绿单色调'],
+        ['敏感度','视杆细胞极发达，对光线和明暗反差极敏感'],
+        ['照膜','眼底有照膜，暗处视力极佳'],
+        ['补充','主要靠嗅觉、电感受器（洛伦兹壶腹）辅助捕猎']]},
+ {k:'horse', e:'🐴', n:'马',    s:'广角·盲区',
+  d:'视野近 350°，几乎能看到身后。但正前方和鼻子下方有盲区——所以别突然从它面前冒出来。',
+  info:[['视野','约 350°，是陆地哺乳动物中最广之一'],
+        ['盲区','正前方约 60～90cm 的鼻前区 + 正后方一小块'],
+        ['色彩','二色视觉，红绿难分，蓝黄可辨'],
+        ['清晰度','约 20/33，比人差，但对运动极敏感'],
+        ['习性','突然从盲区出现会让它受惊踢人，靠近时先出声']]}
+];
+
+var cur=0;
+var cv=document.getElementById('cv'), ctx=cv.getContext('2d',{willReadFrequently:true});
+var vd=document.getElementById('vd');
+var src=document.createElement('canvas'); src.width=SW; src.height=SH;
+var sctx=src.getContext('2d',{willReadFrequently:true});
+var tmp=document.createElement('canvas'); tmp.width=SW; tmp.height=SH;
+var tctx=tmp.getContext('2d',{willReadFrequently:true});
+var prevData=null;
+var stream=null, facing='environment', running=false;
+
+/* 热成像色表 */
+var LUT=new Uint8Array(256*3);
+(function(){
+  var stops=[[0,0,0,0],[.15,20,0,80],[.35,120,0,140],[.55,220,40,60],[.75,255,140,0],[.9,255,220,60],[1,255,255,235]];
+  for(var i=0;i<256;i++){
+    var t=i/255, a=stops[0], b=stops[stops.length-1];
+    for(var j=0;j<stops.length-1;j++){ if(t>=stops[j][0]&&t<=stops[j+1][0]){a=stops[j];b=stops[j+1];break;} }
+    var f=(t-a[0])/(b[0]-a[0]||1);
+    LUT[i*3]=a[1]+(b[1]-a[1])*f; LUT[i*3+1]=a[2]+(b[2]-a[2])*f; LUT[i*3+2]=a[3]+(b[3]-a[3])*f;
+  }
+})();
+
+/* 列表 */
+var list=document.getElementById('list');
+ANIMALS.forEach(function(a,i){
+  var d=document.createElement('div');
+  d.className='it'+(i===0?' on':'');
+  d.innerHTML='<div class="em">'+a.e+'</div><div class="nm">'+a.n+'</div>';
+  d.onclick=function(){ cur=i; sync(); };
+  list.appendChild(d);
+});
+
+function sync(){
+  var a=ANIMALS[cur];
+  document.getElementById('aname').innerHTML=a.n+' <small>'+a.s+'</small>';
+  document.getElementById('desc').textContent=a.d;
+  [].forEach.call(list.children,function(el,i){ el.className='it'+(i===cur?' on':''); });
+  try{ var el=list.children[cur]; el.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'}); }catch(e){}
+}
+sync();
+
+/* 摄像头 */
+function start(){
+  if(stream){ stream.getTracks().forEach(function(t){t.stop();}); }
+  var c={audio:false};
+  c.video={facingMode:facing, width:{ideal:640}, height:{ideal:854}};
+  navigator.mediaDevices.getUserMedia(c).then(function(s){
+    stream=s; vd.srcObject=s;
+    return vd.play();
+  }).then(function(){
+    document.getElementById('hint').style.display='none';
+    if(!running){ running=true; loop(); }
+  }).catch(function(e){
+    document.getElementById('hint').innerHTML='<b>打不开摄像头</b>请允许相机权限后刷新<br><span style="font-size:11px;opacity:.6">'+ (e.name||'') +'</span>';
+  });
+}
+document.getElementById('flip').onclick=function(){
+  facing = facing==='environment' ? 'user' : 'environment';
+  start();
+};
+
+/* 尺寸 */
+function fit(){
+  var st=document.getElementById('stage');
+  var w=st.clientWidth, h=st.clientHeight;
+  var dpr=Math.min(window.devicePixelRatio||1, 2);
+  cv.width=w*dpr; cv.height=h*dpr;
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  // 输出按 object-fit:cover 铺满
+  var scale=Math.max(w/SW, h/SH);
+  var dw=SW*scale, dh=SH*scale;
+  window._draw={w:w,h:h,dw:dw,dh:dh,ox:(w-dw)/2,oy:(h-dh)/2};
+}
+window.addEventListener('resize',fit); fit();
+
+/* 处理 */
+function process(a){
+  var d=sctx.getImageData(0,0,SW,SH), p=d.data;
+  switch(a.k){
+    case 'cat':
+    case 'dog':
+    case 'horse':
+      dichromat(p, a.k==='dog'?1:0);
+      break;
+    case 'bee':
+      bee(p); break;
+    case 'shark':
+      shark(p); break;
+    case 'snake':
+      heat(p); break;
+    case 'eagle':
+      eagle(p); break;
+  }
+  tctx.putImageData(d,0,0);
+  return tmp;
+}
+
+/* 二色视觉（红绿色盲近似） */
+function dichromat(p, dog){
+  for(var i=0;i<p.length;i+=4){
+    var r=p[i], g=p[i+1], b=p[i+2];
+    // 红色信息混入绿通道
+    var nr=0.42*r+0.58*g, ng=0.5*r+0.5*g, nb=b;
+    if(dog){ nb=Math.min(255,b*1.12); ng=Math.min(255,ng*1.06); }
+    // 降饱和
+    var l=0.299*nr+0.587*ng+0.114*nb;
+    nr=l+(nr-l)*0.62; ng=l+(ng-l)*0.62; nb=l+(nb-l)*0.62;
+    if(!dog){ nb=Math.min(255,nb*1.15); } // 猫蓝紫更敏感
+    p[i]=nr; p[i+1]=ng; p[i+2]=nb;
+  }
+}
+
+/* 蜜蜂：无红 + 紫外增强 */
+function bee(p){
+  for(var i=0;i<p.length;i+=4){
+    var r=p[i], g=p[i+1], b=p[i+2];
+    var lum=0.299*r+0.587*g+0.114*b;
+    // 紫外伪映射：用蓝通道的强度当作紫外反射
+    var uv=Math.pow(b/255,0.75)*255;
+    p[i]  = 0.18*r + 0.22*g + 0.10*b;          // 红几乎不可见
+    p[i+1]= 0.30*r + 0.62*g + 0.30*b;
+    p[i+2]= 0.10*r + 0.30*g + 0.55*b + uv*0.45; // 紫外/蓝强化
+    // 轻微紫移
+    var l=0.299*p[i]+0.587*p[i+1]+0.114*p[i+2];
+    p[i]=l+(p[i]-l)*0.7; p[i+1]=l+(p[i+1]-l)*0.7; p[i+2]=l+(p[i+2]-l)*1.25;
+    p[i+2]=Math.min(255,p[i+2]);
+    if(p[i]<0)p[i]=0; if(p[i+1]<0)p[i+1]=0;
+  }
+}
+
+/* 鲨鱼：高对比灰阶 */
+function shark(p){
+  for(var i=0;i<p.length;i+=4){
+    var l=0.299*p[i]+0.587*p[i+1]+0.114*p[i+2];
+    l=(l-128)*1.75+128; // 高对比
+    l=l*0.96; // 偏暗
+    if(l<0)l=0; if(l>255)l=255;
+    p[i]=l*0.86; p[i+1]=l*0.97; p[i+2]=l; // 水下蓝绿偏移
+  }
+}
+
+/* 蛇：热成像 */
+function heat(p){
+  for(var i=0;i<p.length;i+=4){
+    var l=(0.299*p[i]+0.587*p[i+1]+0.114*p[i+2])|0;
+    p[i]=LUT[l*3]; p[i+1]=LUT[l*3+1]; p[i+2]=LUT[l*3+2];
+  }
+}
+
+/* 鹰：紫外增强 + 提锐 */
+function eagle(p){
+  for(var i=0;i<p.length;i+=4){
+    var r=p[i], g=p[i+1], b=p[i+2];
+    var uv=Math.pow(b/255,0.8)*255;
+    p[i]=r*0.95; p[i+1]=g*1.02; p[i+2]=Math.min(255,b*1.1+uv*0.35);
+    var l=0.299*p[i]+0.587*p[i+1]+0.114*p[i+2];
+    p[i]=l+(p[i]-l)*1.28; p[i+1]=l+(p[i+1]-l)*1.28; p[i+2]=l+(p[i+2]-l)*1.28;
+    if(p[i]<0)p[i]=0; if(p[i+1]<0)p[i+1]=0; if(p[i+2]>255)p[i+2]=255;
+    if(p[i]>255)p[i]=255; if(p[i+1]>255)p[i+1]=255;
+  }
+}
+
+/* 复眼六边形采样 */
+function hexEye(){
+  var R=13;
+  var out=document.createElement('canvas'); out.width=SW; out.height=SH;
+  var oc=out.getContext('2d');
+  oc.fillStyle='#000'; oc.fillRect(0,0,SW,SH);
+  var hStep=R*1.5, vStep=R*Math.sqrt(3);
+  oc.save();
+  for(var row=0, y=-R; y<SH+R; row++, y+=vStep){
+    var xOff=(row%2)?hStep*0.5:0;
+    for(var x=-R+xOff; x<SW+R; x+=hStep){
+      // 采样该六边形中心对应源像素
+      var sx=Math.max(0,Math.min(SW-1,x|0)), sy=Math.max(0,Math.min(SH-1,y|0));
+      var px=sctx.getImageData(sx,sy,1,1).data;
+      oc.fillStyle='rgb('+px[0]+','+px[1]+','+px[2]+')';
+      oc.beginPath();
+      for(var k=0;k<6;k++){
+        var ang=Math.PI/180*(60*k);
+        var hx=x+R*Math.cos(ang), hy=y+R*Math.sin(ang);
+        if(k===0) oc.moveTo(hx,hy); else oc.lineTo(hx,hy);
+      }
+      oc.closePath(); oc.fill();
+    }
+  }
+  oc.restore();
+  return out;
+}
+
+function vignette(c){
+  var g=ctx.createRadialGradient(0,0,0,0,0,Math.max(c.width,c.height)*0.62);
+  g.addColorStop(0,'rgba(0,0,0,0)');
+  g.addColorStop(1,'rgba(0,0,0,0.75)');
+  ctx.fillStyle=g; ctx.fillRect(0,0,c.width,c.height);
+}
+
+/* 渲染循环 */
+function loop(){
+  if(!running) return;
+  requestAnimationFrame(loop);
+  if(!vd.videoWidth) return;
+
+  // 画源（裁成 cover）
+  var vw=vd.videoWidth, vh=vd.videoHeight;
+  var s=Math.max(SW/vw, SH/vh);
+  var dw=vw*s, dh=vh*s;
+  sctx.drawImage(vd,(SW-dw)/2,(SH-dh)/2,dw,dh);
+
+  var a=ANIMALS[cur];
+  var D=window._draw;
+  ctx.clearRect(0,0,D.w,D.h);
+
+  if(a.k==='fly'){
+    var oc=hexEye();
+    tctx.clearRect(0,0,SW,SH);
+    tctx.drawImage(oc,0,0);
+    ctx.drawImage(tmp,D.ox,D.oy,D.dw,D.dh);
+    vignette(cv);
+  } else {
+    process(a);
+    ctx.save();
+    if(a.k==='cat'||a.k==='dog'||a.k==='horse'){
+      ctx.filter='blur('+(a.k==='horse'?0.8:1.4)+'px)';
+    } else if(a.k==='shark'){
+      ctx.filter='contrast(1.15)';
+    }
+    ctx.drawImage(tmp,D.ox,D.oy,D.dw,D.dh);
+    ctx.filter='none';
+    ctx.restore();
+
+    if(a.k==='horse'){
+      // 鼻前盲区
+      ctx.fillStyle='rgba(0,0,0,0.82)';
+      ctx.beginPath();
+      ctx.moveTo(D.w*0.5,D.h*1.02); ctx.lineTo(D.w*0.06,D.h*1.02);
+      ctx.quadraticCurveTo(D.w*0.5,D.h*0.72,D.w*0.94,D.h*1.02);
+      ctx.closePath(); ctx.fill();
+      vignette(cv);
+    }
+    if(a.k==='eagle'){
+      // 中央凹放大圈
+      ctx.strokeStyle='rgba(255,255,255,0.25)'; ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.arc(D.w/2,D.h/2,Math.min(D.w,D.h)*0.22,0,Math.PI*2); ctx.stroke();
+    }
+  }
+}
+
+/* 拍照 */
+document.getElementById('cap').onclick=function(){
+  if(!vd.videoWidth){ toast('摄像头还没打开'); return; }
+  var a=document.createElement('a');
+  a.download='动物视觉_'+ANIMALS[cur].n+'_'+Date.now()+'.png';
+  a.href=cv.toDataURL('image/png');
+  a.click();
+  toast('已保存到相册 📷');
+};
+
+/* 科普 */
+var infoOn=false;
+document.getElementById('cmp').onclick=function(){
+  var a=ANIMALS[cur];
+  document.getElementById('iTitle').textContent=a.e+' '+a.n+' 的视觉';
+  document.getElementById('iSub').textContent=a.s;
+  document.getElementById('iBody').innerHTML=a.info.map(function(r){
+    return '<div class="kv"><div class="k">'+r[0]+'</div><div class="v">'+r[1]+'</div></div>';
+  }).join('');
+  document.getElementById('note').innerHTML=
+    '⚠️ 这是<b>科普向的近似模拟</b>，不是该动物视觉的精确还原。<br>'+
+    '颜色映射基于已知的视锥细胞类型推算；紫外、热感应等超出人眼波段的部分，'+
+    '用的是<b>伪彩色示意</b>（摄像头本身捕捉不到紫外和红外）。<br>画面全部在你手机上处理，<b>不上传任何数据</b>。';
+  document.getElementById('info').classList.add('show');
+  infoOn=true;
+};
+document.getElementById('close').onclick=function(){
+  document.getElementById('info').classList.remove('show'); infoOn=false;
+};
+
+function toast(t){
+  var el=document.getElementById('toast');
+  el.textContent=t; el.style.display='block';
+  setTimeout(function(){ el.style.display='none'; },1600);
+}
+
+/* 启动 */
+if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
+  start();
+} else {
+  document.getElementById('hint').innerHTML='<b>浏览器不支持</b>请用 Chrome / Safari 打开';
+}
+</script>
+</body>
+</html>
