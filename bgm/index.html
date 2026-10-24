@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#0F766E">
+<title>视频配乐避坑指南 · BGM/音效怎么找才不侵权</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:#F2F7F6;color:#243B3A;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+ line-height:1.6;max-width:560px;margin:0 auto;overflow-x:hidden;-webkit-font-smoothing:antialiased;padding-bottom:24px}
+
+.hero{padding:30px 20px 24px;color:#fff;background:linear-gradient(160deg,#14B8A6 0%,#0F766E 55%,#134E4A 100%)}
+.hero .ic{font-size:36px;margin-bottom:7px}
+.hero h1{font-size:22px;font-weight:800;letter-spacing:.5px}
+.hero .s{font-size:12.5px;opacity:.92;margin-top:6px;line-height:1.55}
+
+.card{margin:13px 13px 0;padding:16px;border-radius:14px;background:#fff;
+ box-shadow:0 3px 13px rgba(15,90,85,.08)}
+.card h2{font-size:14.5px;font-weight:800;margin-bottom:11px;display:flex;align-items:center;gap:7px}
+.card h2::before{content:"";width:4px;height:15px;border-radius:2px;background:#0F766E}
+.card h3{font-size:13px;font-weight:700;margin:13px 0 6px;color:#115E59}
+
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:6px 0}
+th{background:#CCFBF1;padding:8px 6px;text-align:left;font-size:11.5px;color:#115E59}
+td{padding:8px 6px;border-bottom:1px solid #E9F2F1;vertical-align:top}
+tr:last-child td{border:0}
+td b{color:#0F766E}
+
+.warn{background:#FEF2F2;border:1px solid #FECACA;border-radius:11px;padding:12px;margin:9px 0}
+.warn .t{font-size:12.5px;font-weight:800;color:#DC2626;margin-bottom:6px}
+.warn .c{font-size:12.5px;color:#7F1D1D;line-height:1.75}
+
+.ok{background:#F0FDF4;border:1px solid #BBF7D0;border-radius:11px;padding:12px;margin:9px 0}
+.ok .t{font-size:12.5px;font-weight:800;color:#15803D;margin-bottom:6px}
+.ok .c{font-size:12.5px;color:#14532D;line-height:1.75}
+
+.info{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:11px;padding:12px;margin:9px 0}
+.info .t{font-size:12.5px;font-weight:800;color:#1D4ED8;margin-bottom:6px}
+.info .c{font-size:12.5px;color:#1E3A8A;line-height:1.75}
+
+.item{display:flex;gap:11px;padding:11px 0;border-bottom:1px dashed #E9F2F1;align-items:flex-start}
+.item:last-child{border:0}
+.item .em{width:38px;height:38px;border-radius:10px;flex-shrink:0;font-size:19px;
+ background:#CCFBF1;display:flex;align-items:center;justify-content:center}
+.item .tx{flex:1;min-width:0}
+.item .t1{font-size:13.5px;font-weight:700}
+.item .t2{font-size:12px;color:#6B7F7D;margin-top:3px;line-height:1.6}
+.item .t2 b{color:#0F766E}
+
+.badge{display:inline-block;font-size:10.5px;padding:2px 7px;border-radius:5px;margin-left:5px;font-weight:700}
+.b-green{background:#DCFCE7;color:#15803D}
+.b-red{background:#FEE2E2;color:#DC2626}
+.b-yellow{background:#FEF3C7;color:#B45309}
+
+ul{padding-left:0;list-style:none}
+ul li{font-size:13px;padding:6px 0 6px 0;display:flex;gap:8px;line-height:1.65}
+ul li b{color:#0F766E;flex-shrink:0}
+
+.step{display:flex;gap:11px;padding:10px 0;border-bottom:1px dashed #E9F2F1;align-items:flex-start}
+.step:last-child{border:0}
+.step .no{width:25px;height:25px;border-radius:50%;background:#0F766E;color:#fff;font-size:12.5px;
+ font-weight:700;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.step .ct{flex:1;font-size:13px}
+.step .ct b{display:block;margin-bottom:2px}
+.step .ct span{font-size:12px;color:#6B7F7D;line-height:1.6}
+
+.foot{text-align:center;font-size:11px;color:#94A8A6;padding:16px 20px 4px;line-height:1.7}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="ic">🎵</div>
+  <h1>视频配乐避坑指南</h1>
+  <div class="s">BGM / 音效怎么找，才不会被下架、被索赔</div>
+</div>
+
+<!-- 回答他的问题 -->
+<div class="card">
+  <h2>先回答你：那三个是一回事吗</h2>
+  <div class="info">
+    <div class="t">是同一个软件，三个不同的模型</div>
+    <div class="c">
+      那个软件叫 <b>ComfyUI</b>，你可以理解成"同一个播放器，加载不同的片源"。
+      三个模型是装进去的插件：<br><br>
+      · <b>ACE Step 1.5</b> —— 生成<b>音乐</b>（唱歌、伴奏、风格改编）<br>
+      · <b>Stable Audio 3</b> —— 输入文字生成<b>音效/环境音</b><br>
+      · <b>HunyuanVideo-Foley</b> —— <b>视频丢进去，自动出同步音效</b>（腾讯混元开源）
+    </div>
+  </div>
+
+  <h3>你要的"自动匹配"，确实是第三个</h3>
+  <div class="ok">
+    <div class="t">✓ Foley 就是干这个的</div>
+    <div class="c">它看画面内容自动生成对得上的声音——雨声、脚步、关门、环境底噪，48kHz 高保真，而且<b>音画同步</b>。这确实是三个里最省事的。</div>
+  </div>
+
+  <div class="warn">
+    <div class="t">⚠️ 但它跑不动，卡在硬件上</div>
+    <div class="c">
+      <b>必须 NVIDIA 显卡</b>（AMD/集显基本不行，手机更不可能）：<br>
+      · HunyuanVideo-Foley XXL 版：<b>20GB 显存</b>，开 offload 最低 8–12GB<br>
+      · XL 版：16GB，offload 最低 6–8GB<br>
+      · 模型文件本身 <b>10.3GB</b>（fp16）/ 5.34GB（fp8）<br>
+      · ComfyUI 本体 + Python 环境还要 15GB 硬盘<br><br>
+      <b>我这边没有 GPU，装不了；你手上只有手机，也跑不了。</b>
+      这不是教程难不难的问题，是硬件门槛。
+    </div>
+  </div>
+</div>
+
+<!-- 重点：剪映的坑 -->
+<div class="card">
+  <h2>⚠️ 最该知道的一个坑：剪映的"可商用"</h2>
+  <div class="warn">
+    <div class="t">"可商用"≠ 所有平台都能用</div>
+    <div class="c">
+      剪映曲库里的音乐，标注"可商用"时，下面还有一行小字：
+      <b>可商用：剪映 / 抖音</b>。<br><br>
+      意思是授权<b>只在字节系生态内</b>有效。你在剪映剪好、发抖音，没问题；
+      但同一条视频搬到<b>小红书、视频号、B站、淘宝详情页</b>，就超出授权范围了。<br><br>
+      <b>真实案例：</b>2023 年一家 MCN 机构把用剪映"可商用"音乐做的视频同步到电商平台，
+      被音乐版权方发律师函，<b>赔偿 2.3 万元</b>。<br><br>
+      北京互联网法院在多起案件中明确：平台曲库音乐制作的短视频，应通过该平台传播。
+    </div>
+  </div>
+  <div class="ok">
+    <div class="t">✓ 那我该怎么发</div>
+    <div class="c">
+      · <b>只发抖音</b> → 剪映曲库可以用<br>
+      · <b>要多平台发</b> → 用下面那些全平台可商用的素材站<br>
+      · 剪映里有"商用音乐"面板，里面分两类：<b>仅限剪映/抖音</b> 和 <b>全渠道</b>。选之前点开看清是哪一类
+    </div>
+  </div>
+</div>
+
+<!-- 现在就能用的方案 -->
+<div class="card">
+  <h2>现在就能用：免版权素材站</h2>
+  <table>
+    <tr><th>站点</th><th>授权</th><th>注意</th></tr>
+    <tr><td><b>Pixabay Music</b><br><span style="font-size:11px;color:#6B7F7D">pixabay.com/music</span></td>
+        <td>可商用<br>免署名<span class="badge b-green">推荐</span></td>
+        <td>曲库大、现代风格为主。少数音轨被第三方注册了 Content ID，可能误判</td></tr>
+    <tr><td><b>FreePD</b></td><td>CC0 公共领域<br>完全无限制<span class="badge b-green">最安全</span></td>
+        <td>数量少、风格偏老，但绝对没有版权纠纷风险</td></tr>
+    <tr><td><b>Mixkit</b></td><td>可商用<br>免署名、免注册</td><td>Envato 出品，质量稳定，音乐偏现代</td></tr>
+    <tr><td><b>YouTube 音频库</b></td><td>可商用<br>多数免署名</td><td>需能访问 YouTube。每首有授权标签，下载前看清</td></tr>
+    <tr><td><b>Freesound</b></td><td>逐文件不同<br>CC0/CC BY/CC BY-NC<span class="badge b-yellow">要看清</span></td>
+        <td>音效最全。<b>CC BY-NC 不能商用</b>，用前一定看该文件页面的许可</td></tr>
+    <tr><td><b>耳聆网 / 爱给网</b></td><td>多数需署名</td><td>国内站，中文搜索、环境音真实感强</td></tr>
+    <tr><td><b>Bensound</b></td><td>免费版需署名</td><td>老牌，质量高，免费版要求标注来源</td></tr>
+  </table>
+  <div class="warn">
+    <div class="t">🚫 这两个别用（很多人踩过）</div>
+    <div class="c">
+      · <b>Suno 免费版</b>：明确写了 <b>no commercial rights</b>（无商用权），而且免费版<b>不能下载</b>。要商用得开付费档（$10/月起，且只有下载的那几首有商用权）<br>
+      · <b>Udio</b>：2025 年 10 月 30 日起<b>关闭下载</b>，只能在站内听，不能导出也不能发布到任何平台
+    </div>
+  </div>
+</div>
+
+<!-- 实操流程 -->
+<div class="card">
+  <h2>配乐五步（养成习惯，一次受用）</h2>
+  <div class="step"><div class="no">1</div><div class="ct"><b>先定：发哪些平台</b>
+    <span>只发抖音 → 剪映曲库够用。要多平台 → 必须用全平台可商用的素材</span></div></div>
+  <div class="step"><div class="no">2</div><div class="ct"><b>搜 + 筛选授权类型</b>
+    <span>优先 CC0 或站方明说"可商用免署名"的，省掉后续麻烦</span></div></div>
+  <div class="step"><div class="no">3</div><div class="ct"><b>下载时看清楚标签</b>
+    <span>可商用？需署名？有没有地域/时长限制？</span></div></div>
+  <div class="step"><div class="no">4</div><div class="ct"><b>按授权署名</b>
+    <span>CC BY 必须在简介里给 credit。CC0、Pixabay、Mixkit 不用（给了更好）</span></div></div>
+  <div class="step"><div class="no">5</div><div class="ct"><b>存档：截图 + 链接 + 日期</b>
+    <span><b>这一步最重要。</b>万一被误判或收到通知，你要有凭证能拿出来申诉</span></div></div>
+</div>
+
+<!-- 免费资源的天花板 -->
+<div class="card">
+  <h2>免费资源的天花板（要知道）</h2>
+  <div class="info">
+    <div class="c">
+      几乎所有免费站都写着"请勿登记 Content ID"。但坑在于：<b>平台自己不登记，不代表没别人登记。</b><br><br>
+      日本素材站"魔王魂"就发生过——音乐被不相关的第三方拿去登记 Content ID，
+      结果<b>规规矩矩使用的创作者反而被误判侵权</b>。你什么都没做错，却收到侵权通知。<br><br>
+      这就是免费的极限：<b>它能让你不花钱，但没法让你完全不用操心。</b>
+    </div>
+  </div>
+  <div class="ok">
+    <div class="t">✓ 所以本地 AI 生成的价值在这</div>
+    <div class="c">
+      本地开源模型（ACE Step、Stable Audio、Foley）生成的音频，
+      <b>许可来自开源协议，不进入任何 Content ID 库</b>，也就不会被误判。
+      这正是那个视频强调"无版权顾虑"的真实原因——不是噱头。<br><br>
+      <b>前提是你得有一张 NVIDIA 显卡。</b>
+    </div>
+  </div>
+</div>
+
+<!-- 替代路径 -->
+<div class="card">
+  <h2>你要真想用 Foley，有两条路</h2>
+  <div class="item">
+    <div class="em">💻</div>
+    <div class="tx"><div class="t1">买/搞一台带 N 卡的电脑</div>
+      <div class="t2">RTX 3060 12GB 是起步线（二手两千多）。装好后我可以一步步带你配 ComfyUI 和工作流。<b>但这是一笔先投入。</b></div></div>
+  </div>
+  <div class="item">
+    <div class="em">☁️</div>
+    <div class="tx"><div class="t1">租云端 GPU</div>
+      <div class="t2">按小时计费，不需要买设备。但仍要会用电脑远程操作，而且长期用不比买划算。适合先试一次看看效果。</div></div>
+  </div>
+  <div class="item">
+    <div class="em">🎬</div>
+    <div class="tx"><div class="t1">先用现成素材站（现在就能做）</div>
+      <div class="t2"><b>我建议先走这条。</b>你做萌宠视频，需要的其实是：一段轻松 BGM + 几个转场/动作音效。Pixabay + Mixkit 完全够，零成本、零门槛，今天就能配。</div></div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>给你的具体配方</h2>
+  <ul>
+    <li><b>BGM</b> Pixabay Music，搜 "happy" / "playful" / "cute"，选 30–60 秒的循环段</li>
+    <li><b>转场</b> Mixkit 搜 "whoosh" / "transition"</li>
+    <li><b>动作音效</b> Pixabay 音效库（脚步、门、碗、水声）</li>
+    <li><b>环境底噪</b> 耳聆网（真实感比合成的强）</li>
+    <li><b>音量</b> BGM 压到 -25dB 左右，别盖过解说和音效</li>
+    <li><b>存档</b> 每条视频的配乐来源截图存一个相册</li>
+  </ul>
+</div>
+
+<div class="foot">授权条款会变，重要项目发布前请再核对站点原文。<br>
+本页不构成法律意见，涉及商业投放建议咨询专业人士。</div>
+
+</body>
+</html>
